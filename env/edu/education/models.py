@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+import datetime
 # Create your models here.
 
 class course(models.Model):
@@ -18,6 +18,14 @@ class semester(models.Model):
 	coursename=models.CharField(max_length=30)
 	departmentname=models.CharField(max_length=30)
 	
+class feedback(models.Model):
+	
+	feedback=models.CharField(max_length=30)
+	date=models.DateField(default=datetime.date.today)
+
+
+
+
 
 class subject(models.Model):
 	departmentname=models.CharField(max_length=30)
@@ -69,7 +77,7 @@ class attendance(models.Model):
 	attsub5=models.CharField(max_length=30,blank=True)
 	attsub6=models.CharField(max_length=30,blank=True)
 	attsub7=models.CharField(max_length=30,blank=True)
-	
+	avattendance=models.IntegerField(default=0)
 
 class department(models.Model):
 	departmentname=models.CharField(max_length=30)

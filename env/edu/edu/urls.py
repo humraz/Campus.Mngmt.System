@@ -27,7 +27,12 @@ urlpatterns = [
     url(r'.*addsubject.html/$', v.addsubject),
     url(r'.*viewattendance.html/$', v.addattendance),
     url(r'.*viewsubs.html/$', v.viewdeps),
+    url(r'.*viewfeedback.html/$', v.viewf),
     url(r'.*marks.html/$', v.markss),
+    url(r'.*feedback.html/$', v.feed),
+    url(r'.*register.html/$', v.register),
+
+
 
     
     url(r'.*login.html/$', v.login),
@@ -37,7 +42,9 @@ urlpatterns = [
     url(r'.*addparent.html/$', v.addpp),
 
 
+
+
     url(r'.*adddepartment.html/$', v.adddepartment),
     url(r'.*addattendance.html/$', v.addattendance),
-    url(r'.*$', v.front),
+    url(r'.*hi$', v.front),
 ]

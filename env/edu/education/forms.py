@@ -28,7 +28,10 @@ class studform(forms.ModelForm):
         model= student
         fields= ["username","password",]
 
-
+class feedbackform(forms.ModelForm):
+    class Meta:
+        model =feedback
+        fields=["feedback"]
 
 class parentform(forms.ModelForm):
     class Meta:

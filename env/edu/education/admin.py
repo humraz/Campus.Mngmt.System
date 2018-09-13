@@ -10,6 +10,8 @@ admin.site.register(course)
 admin.site.register(semester)
 
 admin.site.register(student)
+admin.site.register(feedback)
+
 
 admin.site.register(subject)
 admin.site.register(marks)

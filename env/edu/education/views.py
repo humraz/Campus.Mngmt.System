@@ -18,24 +18,45 @@ def addattendance(request):
 		dep=request.session.get('dep')
 		coursee=f.cleaned_data['coursename']
 		semester=f.cleaned_data['semester']
-		
+		atsub1=f.cleaned_data['attsub1']
+		atsub2=f.cleaned_data['attsub2']
+		atsub3=f.cleaned_data['attsub3']
+		atsub4=f.cleaned_data['attsub4']
+		atsub5=f.cleaned_data['attsub5']
+		atsub6=f.cleaned_data['attsub6']
+		atsub7=f.cleaned_data['attsub7']
+		av=[]
+		ap=[]
+		av.append(atsub1)
+		av.append(atsub2)
+		av.append(atsub3)
+		av.append(atsub4)
+		av.append(atsub5)
+		av.append(atsub6)
+		av.append(atsub7)
+		for i in av:
+			if i!="":
+				ap.append(i)
+		tot=0;
+		j=0;
+		for i in ap:
+				tot=tot+int(i)
+				j=j+1
+		print int(tot/j)
 		
 		subsss=subject.objects.all().filter(departmentname=dep, coursename=coursee)
 		studname= f.cleaned_data['studentname']
 		print studname
 		if attendance.objects.all().filter(studentname=studname):
-			atsub1=f.cleaned_data['attsub1']
-			atsub2=f.cleaned_data['attsub2']
-			atsub3=f.cleaned_data['attsub3']
-			atsub4=f.cleaned_data['attsub4']
-			atsub5=f.cleaned_data['attsub5']
-			atsub6=f.cleaned_data['attsub6']
-			atsub7=f.cleaned_data['attsub7']
-			s=attendance.objects.all().filter(studentname=studname).update(attsub1=atsub1,attsub2=atsub2,attsub3=atsub3,attsub4=atsub4,attsub5=atsub5,attsub6=atsub6,attsub7=atsub7,)
+			
+			s=attendance.objects.all().filter(studentname=studname).update(attsub1=atsub1,attsub2=atsub2,attsub3=atsub3,attsub4=atsub4,attsub5=atsub5,attsub6=atsub6,attsub7=atsub7,avattendance=int(tot/j))
 			att=attendance.objects.all().filter(department=dep, coursename=coursee)
 		    	return render(request,'addattendance2.html',{'dep':dep,'course':coursee,'semester':semester, 's':subsss, 'att':att})
+		else:
+			instance = f.save(commit=False)
+        	instance.avattendance =int(tot/j)
+        	instance.save()
 			
-		f.save()
 		print dep,coursee
 		att=attendance.objects.all().filter(department=dep, coursename=coursee)
 		return render(request,'addattendance2.html',{'dep':dep,'course':coursee,'semester':semester, 's':subsss, 'att':att})
@@ -98,8 +119,48 @@ def adddepartment(request):
 
 
 def logindex(request):
+	s= request.session.get("username","NA")
+	pas=request.session.get("password","NA")
+	if student.objects.all().filter(admno=s,password=pas):
+			
+
+		
+		f=student.objects.all().filter(admno=s,password=pas)
+		att=attendance.objects.all().filter(studentname=s)
+		m=marks.objects.all().filter(studentname=s)
+		cc=list(student.objects.values('coursename','deptname', 'semester').filter(admno=s,password=pas))
+		print cc
+		
+		return render(request,'logindex.html',{'user':s, 'f':f,'att':att, 'm':m})
+	else:
+		return render(request,'hi',{'user':s, 'f':f,'att':att, 'm':m})
 	
-	return render(request,'logindex.html')
+def register(request):
+	form= studform(request.POST or None)
+	if form.is_valid():
+		s=form.cleaned_data['username']
+		p=form.cleaned_data['password']
+		print s,p
+		if student.objects.all().filter(admno=s):
+			student.objects.all().filter(admno=s).update(password=p)
+			return render(request,'register.html',{'f':"passed"})
+
+		else:
+			return render(request,'register.html',{'f':"failed"})
+	return render(request,'register.html',{'f':""})
+
+def feed(request):
+	f=feedbackform(request.POST or None)
+	if f.is_valid():
+		f.save()
+	return render(request,'feedback.html')
+
+
+
+def viewf(request):
+	f=feedback.objects.all()
+	return render(request,'viewfeedback.html',{'f':f})
+
 def front(request):
 	
 	return render(request,'frontindex.html')
@@ -108,11 +169,22 @@ def login(request):
 	if forms.is_valid():
 		s=forms.cleaned_data['username']
 		pas=forms.cleaned_data['password']
+		
+
 		if s=="admin" and pas=="admin":
 			return render(request,'index.html')
 
-		if student.objects.all().filter(std_name=s,password=pas):
-			print "ok"
+		if student.objects.all().filter(admno=s,password=pas):
+			request.session['username']=s
+			request.session['password']=pas
+
+			f=student.objects.all().filter(admno=s,password=pas)
+			att=attendance.objects.all().filter(studentname=s)
+			m=marks.objects.all().filter(studentname=s)
+			cc=list(student.objects.values('coursename','deptname', 'semester').filter(admno=s,password=pas))
+			print cc
+			
+			return render(request,'logindex.html',{'user':s, 'f':f,'att':att, 'm':m})
 		else:
 			return render(request,'loginpagefront.html',{'d':"ww"})
 	return render(request,'loginpagefront.html',{'d':""})
