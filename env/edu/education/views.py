@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from .models import *
 from .forms import *
+
 # Create your views here.
 
 @csrf_protect	
@@ -78,6 +79,50 @@ def addattendance(request):
 		
 	return render(request,'addattendance.html',{'d':d,'c':c})
 
+
+def materialup(request):
+	d= department.objects.all()
+	c= course.objects.all()
+	form=materialform(request.POST ,request.FILES)
+	if form.is_valid():
+		form.save()
+
+	return render(request,'materialupload.html',{'c':c,'d':d})
+
+def feees(request):
+	form=feeform(request.POST or None)
+	if form.is_valid():
+		f=form.cleaned_data['student']
+		if student.objects.all().filter(admno=f):
+
+			form.save()
+			return render(request,'addfee.html',{'f':"yes"})
+		else:
+			return render(request,'addfee.html',{'f':"no"})
+
+
+	return render(request,'addfee.html',{'f':""})
+
+
+
+def resetatt(request):
+	d= department.objects.all()
+	c= course.objects.all()
+	f=subjectform2(request.POST or None)
+	if  f.is_valid():
+
+		c=f.cleaned_data['departmentname']
+		d=f.cleaned_data['coursename']
+
+		s=f.cleaned_data['semester']
+		print c,d,s
+		print attendance.objects.filter(department=c,coursename=d,semester=s)
+		attendance.objects.filter(department=c,coursename=d,semester=s).delete()
+		return render(request,'resetattendance.html',{'c':c,'d':d, 's':"done"})
+
+	return render(request,'resetattendance.html',{'c':c,'d':d})
+
+
 def addcourse(request):
 	d= department.objects.all()
 	
@@ -104,7 +149,20 @@ def addparent(request):
 		forms.save()
 	return render(request,'addparent.html')
 
+def viewmats(request):
+	d= department.objects.all()
+	c= course.objects.all()
+	forms= subjectform2(request.POST or None)
+	if forms.is_valid():
+		c=forms.cleaned_data['departmentname']
+		d=forms.cleaned_data['coursename']
 
+		s=forms.cleaned_data['semester']
+		m=material.objects.all().filter(department=c,course=d,semester=s)
+		print m,c,d,s
+		return render(request,'viewmaterial.html',{'m':m, 'f':"1"})
+
+	return render(request,'viewmaterial.html',{'c':c,'d':d, 'f':"0"})
 def addmarks(request):
 	forms= marksform(request.POST or None)
 	if forms.is_valid():
@@ -128,10 +186,12 @@ def logindex(request):
 		f=student.objects.all().filter(admno=s,password=pas)
 		att=attendance.objects.all().filter(studentname=s)
 		m=marks.objects.all().filter(studentname=s)
-		cc=list(student.objects.values('coursename','deptname', 'semester').filter(admno=s,password=pas))
-		print cc
+		t=fee.objects.all().filter(student=s)
 		
-		return render(request,'logindex.html',{'user':s, 'f':f,'att':att, 'm':m})
+		cc=list(student.objects.values('coursename','deptname', 'semester').filter(admno=s,password=pas))
+		print cc,t,f,s
+		
+		return render(request,'logindex.html',{'user':s, 'f':f,'att':att, 'm':m,'t':t})
 	else:
 		return render(request,'hi',{'user':s, 'f':f,'att':att, 'm':m})
 	
@@ -181,10 +241,11 @@ def login(request):
 			f=student.objects.all().filter(admno=s,password=pas)
 			att=attendance.objects.all().filter(studentname=s)
 			m=marks.objects.all().filter(studentname=s)
+			t=fee.objects.all().filter(student=s)
 			cc=list(student.objects.values('coursename','deptname', 'semester').filter(admno=s,password=pas))
 			print cc
 			
-			return render(request,'logindex.html',{'user':s, 'f':f,'att':att, 'm':m})
+			return render(request,'logindex.html',{'user':s, 'f':f,'att':att, 'm':m,'t':t})
 		else:
 			return render(request,'loginpagefront.html',{'d':"ww"})
 	return render(request,'loginpagefront.html',{'d':""})

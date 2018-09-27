@@ -14,15 +14,15 @@
     <link rel="apple-touch-icon" href="{% static 'apple-icon.png' %}">
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 
-    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/flag-icon.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
-    <link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">
-    <link href="{% static 'assets/css/lib/vector-map/jqvmap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'asse/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'asse/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'asse/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'asse/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'asse/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static 'asse/css/cs-skin-elastic.css' %}">
+    <!-- <link rel="stylesheet" href="asse/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="{% static 'asse/scss/style.css' %}">
+    <link href="{% static 'asse/css/lib/vector-map/jqvmap.min.css' %}" rel="stylesheet">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -56,7 +56,7 @@
                         <a href="feedback.html"> <i class="menu-icon ti-book"></i>Give Feedback </a>
                     </li>
                     <li>
-                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widgets </a>
+                        <a href="viewmets.html"> <i class="menu-icon ti-email"></i>Study Materials </a>
                     </li>
                    <li>
                         <a href="hi"> <i class="menu-icon ti-lock"></i>Logout </a>
@@ -108,7 +108,7 @@
                                 <div class="mx-auto d-block">
                                     <img class="rounded-circle mx-auto d-block" src="{% static 'images/admin.jpg' %}" alt="Card image cap">
                                     <h5 class="text-sm-center mt-2 mb-1">Student ID - {{user}}</h5>
-                                    <div class="location text-sm-center"><i class="fa fa-map-marker"></i> Kristu Jayanti College</div>
+                                    <div class="location text-sm-center"><i class="fa fa-map-marker"></i> Kristu Jyoti College</div>
                                 </div>
                                 <hr>
                                 <div class="card-text text-sm-center">
@@ -162,28 +162,22 @@
                     </div>
                      
 
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header bg-dark">
-                                <strong class="card-title text-light">Fee Details</strong>
+                 
+ <div class="card">
+                                <div class="card-header">
+                                    <strong>Fee Information</strong>
+                                    
+                                </div>
+                                <div class="card-body">
+ {% for d in t %}
+                                    <a href="#">Outstanding Fee ------ {{d.fee}}  </a>
+                                    
+                                     {%endfor%}
+                                </div>
                             </div>
-                            <div class="card-body text-white bg-danger">
-                                <p class="card-text text-light">fefefefefef</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header bg-dark">
-                                <strong class="card-title text-light">Course Details</strong>
-                            </div>
-                            <div class="card-body text-white bg-danger">
-                                <p class="card-text text-light">asdasdasdasdasdasd</p>
-                            </div>
-                        </div>
-                    </div>
-                      </div>
-                    </div>
+
+
+              
 
   <div class="col-lg-12">
                     <div class="card">
@@ -311,19 +305,19 @@
 
     <!-- Right Panel -->
 
-    <script src="{% static 'assets/js/vendor/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'asse/js/vendor/jquery-2.1.4.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-    <script src="{% static 'assets/js/plugins.js' %}"></script>
-    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'asse/js/plugins.js' %}"></script>
+    <script src="{% static 'asse/js/main.js' %}"></script>
 
 
-    <script src="{% static 'assets/js/lib/chart-js/Chart.bundle.js' %}"></script>
-    <script src="{% static 'assets/js/dashboard.js' %}"></script>
-    <script src="{% static 'assets/js/widgets.js' %}"></script>
-    <script src="{% static 'assets/js/lib/vector-map/jquery.vmap.js' %}"></script>
-    <script src="{% static 'assets/js/lib/vector-map/jquery.vmap.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/vector-map/jquery.vmap.sampledata.js' %}"></script>
-    <script src="{% static 'assets/js/lib/vector-map/country/jquery.vmap.world.js' %}"></script>
+    <script src="{% static 'asse/js/lib/chart-js/Chart.bundle.js' %}"></script>
+    <script src="{% static 'asse/js/dashboard.js' %}"></script>
+    <script src="{% static 'asse/js/widgets.js' %}"></script>
+    <script src="{% static 'asse/js/lib/vector-map/jquery.vmap.js' %}"></script>
+    <script src="{% static 'asse/js/lib/vector-map/jquery.vmap.min.js' %}"></script>
+    <script src="{% static 'asse/js/lib/vector-map/jquery.vmap.sampledata.js' %}"></script>
+    <script src="{% static 'asse/js/lib/vector-map/country/jquery.vmap.world.js' %}"></script>
     <script>
         ( function ( $ ) {
             "use strict";

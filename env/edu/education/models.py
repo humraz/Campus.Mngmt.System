@@ -25,6 +25,16 @@ class feedback(models.Model):
 
 
 
+class material(models.Model):
+	desc=models.CharField(max_length=100)
+	file=models.FileField(upload_to='education/static/files/')
+	department=models.CharField(max_length=30)
+	course=models.CharField(max_length=30)
+	semester=models.CharField(max_length=30)
+
+class fee(models.Model):
+	student=models.CharField(max_length=30)
+	fee=models.CharField(max_length=30,default="0")
 
 
 class subject(models.Model):

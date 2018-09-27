@@ -8,7 +8,7 @@ from .models import *
 class courseform(forms.ModelForm):
     class Meta:
         model= course
-        fields= ["department","name",]
+        fields= ["department","name","ctype",]
 
 class semesterform(forms.ModelForm):
     class Meta:
@@ -16,11 +16,29 @@ class semesterform(forms.ModelForm):
         fields= ["semname","coursename","departmentname",]
 
 
+
+class materialform(forms.ModelForm):
+    class Meta:
+        model = material
+        fields = ('desc', 'file','department','course','semester', )
+
+
 class subjectform(forms.ModelForm):
     class Meta:
         model= subject
         fields= ["departmentname","subjectname","coursename","semester",]
 
+
+
+class subjectform2(forms.ModelForm):
+    class Meta:
+        model= subject
+        fields= ["departmentname","coursename","semester",]
+
+class feeform(forms.ModelForm):
+    class Meta:
+        model= fee
+        fields= ["student","fee",]
 
 
 class studform(forms.ModelForm):

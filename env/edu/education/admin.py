@@ -17,5 +17,7 @@ admin.site.register(subject)
 admin.site.register(marks)
 
 admin.site.register(attendance)
+admin.site.register(fee)
+admin.site.register(material)
 
 admin.site.register(department)
